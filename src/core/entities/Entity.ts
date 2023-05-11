@@ -40,7 +40,6 @@ export default abstract class Entity<T extends EntityProps> {
   }
 
   constructor(props: T) {
-    console.log(this.filterObject(props));
     this.props = this.filterObject(props);
   }
 
