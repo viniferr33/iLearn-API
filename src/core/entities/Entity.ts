@@ -28,8 +28,20 @@ export default abstract class Entity<T extends EntityProps> {
     this._id = id;
   }
 
+  private filterObject(obj: T): T {
+    const propsCopy = JSON.parse(JSON.stringify(obj));
+    if (propsCopy.id) delete propsCopy.id;
+
+    if (propsCopy.createdAt) delete propsCopy.createdAt;
+
+    if (propsCopy.updatedAt) delete propsCopy.updatedAt;
+
+    return propsCopy;
+  }
+
   constructor(props: T) {
-    this.props = props;
+    console.log(this.filterObject(props));
+    this.props = this.filterObject(props);
   }
 
   public toObject(): EntityObject<T> {
