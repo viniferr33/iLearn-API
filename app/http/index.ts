@@ -1,8 +1,8 @@
 import ExpressServer from "./Server";
 import CreateStudentAdapter from "./adapters/Student/CreateStudent.adapter";
-import { PORT } from "./config";
+import { PORT, SQL_SERVICE } from "./config";
 
-const myServer = new ExpressServer(PORT);
+const myServer = new ExpressServer(PORT, SQL_SERVICE);
 myServer.addRoute(CreateStudentAdapter);
 
 myServer.setup();
