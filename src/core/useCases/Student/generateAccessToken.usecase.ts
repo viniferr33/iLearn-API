@@ -33,7 +33,7 @@ export default class GenerateAccessTokenUseCase
           if (student && student.props.password === password)
             resolve({ accessToken: this.encryptToken(email, password) });
           else throw new Unauthorized("Invalid credentials!");
-        } else throw new Error("Something went wrong...");
+        } else throw new Unauthorized("Invalid credentials!");
       } catch (error) {
         reject(error);
       }

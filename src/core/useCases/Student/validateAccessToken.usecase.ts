@@ -35,9 +35,9 @@ export default class ValidateAccessTokenUseCase
 
           if (student && student.props.password === password)
             resolve({ sucess: true });
-          else throw new Unauthorized("Invalid Token!");
+          else throw new Unauthorized("Invalid credentials!");
         } else {
-          throw new Error("Something went wrong...");
+          throw new Unauthorized("Invalid credentials");
         }
       } catch (error) {
         reject(error);
