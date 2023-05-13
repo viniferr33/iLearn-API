@@ -1,13 +1,21 @@
 import PostgreService from "../../src/infra/db.SQL/PostgreService";
+import SQLServerService from "../../src/infra/db.SQL/SQLServerService";
 
 const PORT = 8080;
 
-const SQL_SERVICE = new PostgreService({
-  user: "string",
-  host: "string",
-  database: "string",
-  password: "string",
-  port: 0,
+const POSTGRE = new PostgreService({
+  user: "postgres",
+  host: "localhost",
+  database: "ilearn",
+  password: "myPassword",
+  port: 5432,
 });
 
-export { SQL_SERVICE, PORT };
+const SQL_SERVER = new SQLServerService({
+  server: process.env.DB_SERVER ?? "",
+  database: process.env.DB_DATABASE ?? "",
+  password: process.env.DB_PASSWORD ?? "",
+  user: process.env.DB_USER ?? "",
+});
+
+export { POSTGRE, SQL_SERVER, PORT };

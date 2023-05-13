@@ -11,19 +11,19 @@ import ErrorHandler from "./handlers/ErrorHandler";
 
 import swaggerData from "./swagger/swagger.json";
 
-import { SQL_SERVICE } from "./config";
+import ISQLService from "../../src/infra/ISQLService";
 
 export default class ExpressServer {
   public app: Application;
   public router: Router;
 
   private errorHandler = new ErrorHandler();
-  private authHandler = new AuthHandler(SQL_SERVICE);
+  private authHandler = new AuthHandler(this.sqlServer);
 
   private _setup = false;
   private _server!: Server;
 
-  constructor(protected port: number) {
+  constructor(protected port: number, private sqlServer: ISQLService) {
     this.app = express();
     this.router = Router();
   }
@@ -49,7 +49,7 @@ export default class ExpressServer {
   }
 
   public addRoute(adapter: IAdapterConstructor): void {
-    const myAdapter = new adapter(SQL_SERVICE);
+    const myAdapter = new adapter(this.sqlServer);
     const path = "/api/" + myAdapter.path;
 
     switch (myAdapter.method) {
@@ -79,6 +79,7 @@ export default class ExpressServer {
       throw new Error("Server is already listening!");
 
     this._server = this.app.listen(this.port, () => {
+      console.clear();
       console.log("Server is running on port: " + this.port);
     });
   }
@@ -89,6 +90,6 @@ export default class ExpressServer {
   }
 
   private swaggerSetup(): void {
-    this.router.use("/api/docs", serve, setup(swaggerData));
+    this.router.use("/swagger/docs", serve, setup(swaggerData));
   }
 }

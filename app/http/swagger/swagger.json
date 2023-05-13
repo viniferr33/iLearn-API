@@ -210,6 +210,11 @@
       "bearerAuth": []
     }
   ],
+  "servers": [
+    {
+      "url": "/api"
+    }
+  ],
   "paths": {
     "/students": {
       "get": {
