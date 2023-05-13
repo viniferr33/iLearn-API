@@ -2,7 +2,7 @@ import Unauthorized from "../../../errors/UnauthorizedError";
 import RepositoryFactory from "../../../gateways/repositories";
 import ISQLService from "../../../infra/ISQLService";
 import MockSQLService from "../../../infra/db.SQL/MockSQLService";
-import ValidateAccessTokenUseCase from "./generateAccessToken.usecase";
+import ValidateAccessTokenUseCase from "./validateAccessToken.usecase";
 
 describe("ValidateAccessTokenUseCase", () => {
   let validateAccessTokenUseCase: ValidateAccessTokenUseCase;
@@ -35,14 +35,14 @@ describe("ValidateAccessTokenUseCase", () => {
 
     const accessToken = await validateAccessTokenUseCase.execute(input);
 
-    expect(accessToken.accessToken).toBeDefined();
-    expect(accessToken.accessToken.length).toBe(128);
+    expect(accessToken.sucess).toBeDefined();
+    expect(accessToken.sucess).toBe(true);
   });
 
   it("Should not validate an Access Token - Invalid Credentials", async () => {
     const input = {
       accessToken:
-        "U2FsdGVkX19kHW87FoR1xNvKTHUGk/rebfIhqSuNSB3s8WP/A83F++6LjszBMd3IbkmOeHojX1YehA/vV66V0g==",
+        "",
     };
 
     jest.spyOn(mockSqlDb, "findOne").mockResolvedValueOnce({
