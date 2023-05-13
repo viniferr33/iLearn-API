@@ -3,7 +3,7 @@ import LoginOutput from "../../../dtos/Login.output";
 import RepositoryFactory from "../../../gateways/repositories";
 import IUseCase from "../IUseCase";
 
-export default class GenerateAccessToken
+export default class GenerateAccessTokenUseCase
   implements IUseCase<LoginInput, LoginOutput>
 {
   constructor(public repositoryFactory: RepositoryFactory) {}
