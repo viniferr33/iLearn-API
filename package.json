@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node dist/app/http/index.js",
+    "build": "tsc --build",
     "dev": "dotenv -e .env -- ts-node-dev app/http/index.ts",
     "test": "jest"
   },
