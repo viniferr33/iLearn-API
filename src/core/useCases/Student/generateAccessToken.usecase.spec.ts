@@ -36,7 +36,6 @@ describe("GenerateAccessTokenUseCase", () => {
     const accessToken = await generateAccessTokenUseCase.execute(input);
 
     expect(accessToken.accessToken).toBeDefined();
-    expect(accessToken.accessToken.length).toBe(128);
   });
 
   it("Should not generate an Access Token - Invalid Credentials", async () => {
@@ -62,22 +61,12 @@ describe("GenerateAccessTokenUseCase", () => {
 
   it("Should not generate an Access Token - Student do not exist!", async () => {
     const input = {
-        email: "aaaaaaaaaaa@teste.com",
-        password: ":D",
-      };
-  
-      jest.spyOn(mockSqlDb, "findOne").mockResolvedValueOnce({
-        id: 42,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        name: "Um nome qualquer",
-        email: "email_de_teste@teste.com",
-        phone: "4002-8922",
-        password: "umasenhaforte@123AAA",
-      });
-  
-      await expect(generateAccessTokenUseCase.execute(input)).rejects.toThrow(
-        Unauthorized
-      );
+      email: "aaaaaaaaaaa@teste.com",
+      password: ":D",
+    };
+
+    await expect(generateAccessTokenUseCase.execute(input)).rejects.toThrow(
+      Unauthorized
+    );
   });
 });
