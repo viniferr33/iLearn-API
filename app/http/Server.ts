@@ -79,6 +79,7 @@ export default class ExpressServer {
       throw new Error("Server is already listening!");
 
     this._server = this.app.listen(this.port, () => {
+      console.clear();
       console.log("Server is running on port: " + this.port);
     });
   }
@@ -89,6 +90,6 @@ export default class ExpressServer {
   }
 
   private swaggerSetup(): void {
-    this.router.use("/api/docs", serve, setup(swaggerData));
+    this.router.use("/swagger/docs", serve, setup(swaggerData));
   }
 }
