@@ -16,9 +16,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-      - name: Get tag
-        id: tag
-        uses: dawidd6/action-get-tag@v1
       - name: Log into registry
         uses: docker/login-action@v1
         with:
