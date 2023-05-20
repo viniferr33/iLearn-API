@@ -16,6 +16,7 @@ export default class ValidateAccessTokenUseCase
       process.env.SECRET_KEY ?? "YourSecretKey123"
     );
     const decrypted = decryptedBytes.toString(CryptoJS.enc.Utf8);
+    console.log(decrypted);
     return decrypted;
   }
 
@@ -40,6 +41,7 @@ export default class ValidateAccessTokenUseCase
           throw new Unauthorized("Invalid credentials");
         }
       } catch (error) {
+        console.log(error);
         reject(error);
       }
     });
