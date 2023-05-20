@@ -35,6 +35,7 @@ export default class AuthHandler {
         if (request.baseUrl.endsWith("login")) {
           const data = request.body as LoginInput;
           const accessToken = await this.generateAcessToken.execute(data);
+          console.log(accessToken);
           response.json(accessToken);
         } else next();
       } else {

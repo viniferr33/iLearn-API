@@ -3,7 +3,7 @@ import LoginOutput from "../../../dtos/Login.output";
 import Unauthorized from "../../../errors/UnauthorizedError";
 import RepositoryFactory from "../../../gateways/repositories";
 import IUseCase from "../IUseCase";
-import * as CryptoJS from "crypto-js";
+import * as jwt from "jsonwebtoken";
 
 export default class GenerateAccessTokenUseCase
   implements IUseCase<LoginInput, LoginOutput>
@@ -11,12 +11,13 @@ export default class GenerateAccessTokenUseCase
   constructor(public repositoryFactory: RepositoryFactory) {}
 
   private encryptToken(email: string, password: string) {
-    const input = `${email}||${password}`;
-
-    const encrypted = CryptoJS.AES.encrypt(
-      input,
+    const encrypted = jwt.sign(
+      {
+        email: email,
+        password: password,
+      },
       process.env.SECRET_KEY ?? "YourSecretKey123"
-    ).toString();
+    );
     return encrypted;
   }
 
