@@ -90,6 +90,6 @@ export default class ExpressServer {
   }
 
   private swaggerSetup(): void {
-    this.router.use("/swagger/docs", serve, setup(swaggerData));
+    this.router.use("/api/docs", serve, setup(swaggerData));
   }
 }
