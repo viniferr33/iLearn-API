@@ -3,7 +3,7 @@ import LoginInput from "../../../dtos/Login.input";
 import Unauthorized from "../../../errors/UnauthorizedError";
 import RepositoryFactory from "../../../gateways/repositories";
 import IUseCase from "../IUseCase";
-import * as CryptoJS from "crypto-js";
+import * as jwt from "jsonwebtoken";
 
 export default class ValidateAccessTokenUseCase
   implements IUseCase<LoginInput, DefaultOperationOutput>
@@ -11,12 +11,11 @@ export default class ValidateAccessTokenUseCase
   constructor(public repositoryFactory: RepositoryFactory) {}
 
   private decryptToken(token: string) {
-    const decryptedBytes = CryptoJS.AES.decrypt(
-      token,
-      process.env.SECRET_KEY ?? "YourSecretKey123"
+    const jwtPayload = <{ email: string; password: string }>(
+      jwt.verify(token, process.env.SECRET_KEY ?? "YourSecretKey123")
     );
-    const decrypted = decryptedBytes.toString(CryptoJS.enc.Utf8);
-    return decrypted;
+
+    return jwtPayload;
   }
 
   execute(data: LoginInput): Promise<DefaultOperationOutput> {
@@ -28,8 +27,7 @@ export default class ValidateAccessTokenUseCase
         const { accessToken } = data;
 
         if (accessToken !== undefined) {
-          const decriptedToken = this.decryptToken(accessToken);
-          const [email, password] = decriptedToken.split("||");
+          const { email, password } = this.decryptToken(accessToken);
 
           const student = await studentRepository.getByEmail(email);
 
@@ -40,6 +38,7 @@ export default class ValidateAccessTokenUseCase
           throw new Unauthorized("Invalid credentials");
         }
       } catch (error) {
+        console.log(error);
         reject(error);
       }
     });
