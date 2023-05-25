@@ -1,25 +1,23 @@
 import Entity from "./Entity";
 
-type StudentProps = {
-  name: string;
-  email: string;
-  password: string;
-  phone: string;
+type StudentOfferRequestProps = {
+  studentId: number;
+  offerId: number;
 };
 
-export default class Student extends Entity<StudentProps> {
-  private constructor(props: StudentProps) {
+export class StudentOffer extends Entity<StudentOfferRequestProps> {
+  private constructor(props: StudentOfferRequestProps) {
     super(props);
   }
 
   static create(
-    props: StudentProps & {
+    props: StudentOfferRequestProps & {
       id?: number;
       createdAt?: Date;
       updatedAt?: Date;
     }
-  ): Student {
-    const myEntity = new Student(props);
+  ): StudentOffer {
+    const myEntity = new StudentOffer(props);
 
     if (props.id) myEntity.id = props.id;
     if (props.createdAt) myEntity.createdAt = props.createdAt;
@@ -29,4 +27,4 @@ export default class Student extends Entity<StudentProps> {
   }
 }
 
-export { StudentProps };
+export { StudentOfferRequestProps };

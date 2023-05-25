@@ -1,10 +1,8 @@
 import { HelpRequestProps } from "./HelpRequest";
 import { OfferProps } from "./Offer";
-import {
-  StudentHelpRequestProps,
-  StudentOfferRequestProps,
-  StudentProps,
-} from "./Student";
+import { StudentProps } from "./Student";
+import { StudentHelpRequestProps } from "./StudentHelpRequest";
+import { StudentOfferRequestProps } from "./StudentOffer";
 
 type EntityProps =
   | HelpRequestProps
@@ -12,6 +10,12 @@ type EntityProps =
   | StudentProps
   | StudentHelpRequestProps
   | StudentOfferRequestProps;
+
+type EntityObject<T extends EntityProps> = T & {
+  id: number;
+  createdAt: Date;
+  updatedAt: Date;
+};
 
 export default abstract class Entity<T extends EntityProps> {
   protected _id!: number;
@@ -53,11 +57,5 @@ export default abstract class Entity<T extends EntityProps> {
     return obj as EntityObject<T>;
   }
 }
-
-type EntityObject<T extends EntityProps> = T & {
-  id: number;
-  createdAt: Date;
-  updatedAt: Date;
-};
 
 export { EntityProps, EntityObject };

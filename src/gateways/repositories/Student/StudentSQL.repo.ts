@@ -1,8 +1,6 @@
-import Student, {
-  StudentProps,
-  StudentOffer,
-  StudentHelpRequest,
-} from "../../../core/entities/Student";
+import Student, { StudentProps } from "../../../core/entities/Student";
+import { StudentHelpRequest } from "../../../core/entities/StudentHelpRequest";
+import { StudentOffer } from "../../../core/entities/StudentOffer";
 import DatabaseError from "../../../errors/DatabaseError";
 import ISQLService from "../../../infra/ISQLService";
 import IStudentRepository from "./IStudent.repo";
