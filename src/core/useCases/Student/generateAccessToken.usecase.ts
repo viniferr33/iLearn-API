@@ -32,7 +32,10 @@ export default class GenerateAccessTokenUseCase
           const student = await studentRepository.getByEmail(email);
 
           if (student && student.props.password === password)
-            resolve({ accessToken: this.encryptToken(email, password) });
+            resolve({
+              accessToken: this.encryptToken(email, password),
+              studentId: student.id,
+            });
           else throw new Unauthorized("Invalid credentials!");
         } else throw new Unauthorized("Invalid credentials!");
       } catch (error) {
